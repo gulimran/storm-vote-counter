@@ -2,14 +2,15 @@ package imran.service;
 
 import imran.domain.Candidate;
 import imran.domain.Result;
+import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-public class ResultService implements Serializable {
+@Service
+public class ResultService {
 
     private static final Map<Candidate, Integer> VOTING_RESULTS = new ConcurrentHashMap<>();
     private RankingService rankingService;

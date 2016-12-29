@@ -6,7 +6,7 @@ import imran.domain.Voter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VoterServiceImpl implements VoterService {
+public class InMemoryVoterService implements VoterService {
 
     @Override
     public Voter nextVoter() {

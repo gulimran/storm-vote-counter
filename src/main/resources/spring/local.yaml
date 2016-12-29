@@ -1,0 +1,3 @@
+storm:
+  zookeeperHosts:
+  - localhost:2181

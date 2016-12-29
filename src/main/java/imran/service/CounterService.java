@@ -2,12 +2,13 @@ package imran.service;
 
 import imran.domain.Candidate;
 import imran.domain.Vote;
+import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class CounterService implements Serializable {
+@Service
+public class CounterService {
 
     private Map<Candidate, Integer> voteCount = new ConcurrentHashMap<>();
 

@@ -4,7 +4,9 @@ import imran.bolt.CounterBolt;
 import imran.bolt.ResultBolt;
 import imran.domain.Result;
 import imran.service.ResultService;
+import imran.service.ServiceProvider;
 import imran.spout.VoteSpout;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.storm.Config;
 import org.apache.storm.LocalCluster;
@@ -20,23 +22,18 @@ import org.apache.storm.utils.Utils;
 import java.util.List;
 
 @Slf4j
+@AllArgsConstructor
 public class VoteCountTopology {
 
     private final String topologyName;
     private final Config configuration;
-    private ResultService resultService;
-
-    public VoteCountTopology(String topologyName, Config configuration) {
-        this.topologyName = topologyName;
-        this.configuration = configuration;
-    }
+    private final ServiceProvider serviceProvider;
 
     public StormTopology create() {
-        resultService = new ResultService();
         TopologyBuilder topologyBuilder = new TopologyBuilder();
-        topologyBuilder.setSpout("spout", new VoteSpout(), 5);
-        topologyBuilder.setBolt("count", new CounterBolt(), 3).shuffleGrouping("spout");
-        topologyBuilder.setBolt("result", new ResultBolt(resultService), 1).fieldsGrouping("count",  new Fields("voteCount"));
+        topologyBuilder.setSpout("spout", serviceProvider.getBean(VoteSpout.class), 5);
+        topologyBuilder.setBolt("count", serviceProvider.getBean(CounterBolt.class), 3).shuffleGrouping("spout");
+        topologyBuilder.setBolt("result", serviceProvider.getBean(ResultBolt.class), 1).fieldsGrouping("count",  new Fields("voteCount"));
 //        topologyBuilder.setBolt("print", new PrinterBolt(), 1).shuffleGrouping("count");
 
         return topologyBuilder.createTopology();
@@ -57,7 +54,7 @@ public class VoteCountTopology {
         } finally {
             cluster.killTopology(topologyName);
             cluster.shutdown();
-            List<Result> votingResults = resultService.getVotingResults();
+            List<Result> votingResults = serviceProvider.getBean(ResultService.class).getVotingResults();
             log.info("###########################################################");
             log.info("Voting results: {}", votingResults);
             log.info("Winner is: {}", votingResults.get(0));

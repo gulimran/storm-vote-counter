@@ -6,7 +6,7 @@ import imran.domain.Candidate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CandidateServiceImpl implements CandidateService {
+public class InMemoryCandidateService implements CandidateService {
 
 
     @Override

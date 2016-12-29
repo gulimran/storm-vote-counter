@@ -2,6 +2,7 @@ package imran.bolt;
 
 import imran.domain.Candidate;
 import imran.service.ResultService;
+import imran.service.ServiceProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.storm.topology.BasicOutputCollector;
 import org.apache.storm.topology.OutputFieldsDeclarer;
@@ -13,10 +14,10 @@ import java.util.Map;
 @Slf4j
 public class ResultBolt extends BaseBasicBolt {
 
-    private ResultService resultService;
+    private final ServiceProvider serviceProvider;
 
-    public ResultBolt(ResultService resultService) {
-        this.resultService = resultService;
+    public ResultBolt(ServiceProvider serviceProvider) {
+        this.serviceProvider = serviceProvider;
     }
 
     @Override
@@ -24,7 +25,7 @@ public class ResultBolt extends BaseBasicBolt {
     public void execute(Tuple tuple, BasicOutputCollector basicOutputCollector) {
         Map<Candidate, Integer> voteCount = (Map<Candidate, Integer>) tuple.getValueByField("voteCount");
         log.debug("Results so far are: {}", voteCount);
-        resultService.updateVoteCount(voteCount);
+        serviceProvider.getBean(ResultService.class).updateVoteCount(voteCount);
     }
 
     @Override

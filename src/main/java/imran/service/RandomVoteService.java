@@ -5,14 +5,16 @@ import imran.api.VoterService;
 import imran.domain.Candidate;
 import imran.domain.Vote;
 import imran.domain.Voter;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Random;
 
-public class VoteServiceImpl implements VoteService {
+@Service
+public class RandomVoteService implements VoteService {
 
-    private List<Candidate> candidates = new CandidateServiceImpl().allCandidates();
-    private VoterService voterService = new VoterServiceImpl();
+    private List<Candidate> candidates = new InMemoryCandidateService().allCandidates();
+    private VoterService voterService = new InMemoryVoterService();
     private Random randomGenerator = new Random();
 
     @Override
