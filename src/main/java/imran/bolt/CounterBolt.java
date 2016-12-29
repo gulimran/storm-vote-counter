@@ -1,5 +1,6 @@
 package imran.bolt;
 
+import imran.domain.Result;
 import imran.domain.Vote;
 import imran.service.CounterService;
 import imran.service.ServiceProvider;
@@ -23,8 +24,9 @@ public class CounterBolt extends BaseBasicBolt {
     @Override
     public void execute(Tuple tuple, BasicOutputCollector collector) {
         Vote vote = (Vote) tuple.getValueByField("vote");
-        log.debug("Received vote: {}", vote);
-        collector.emit(new Values(serviceProvider.getBean(CounterService.class).updateVoteCount(vote)));
+        Result result = serviceProvider.getBean(CounterService.class).addVote(vote);
+        log.debug("Vote count: {}", result);
+        collector.emit(new Values(result));
     }
 
     @Override

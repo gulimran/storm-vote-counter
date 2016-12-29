@@ -11,6 +11,6 @@ public class Main {
 
     public void run() {
         StormTopology topology = voteCountTopology.create();
-        voteCountTopology.deploy(topology, 10000);
+        voteCountTopology.deploy(topology, 30000);
     }
 }

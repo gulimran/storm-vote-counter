@@ -1,4 +1,4 @@
-package imran.service;
+package imran.test;
 
 import imran.api.VoteService;
 import imran.api.VoterService;
@@ -18,7 +18,7 @@ public class RandomVoteService implements VoteService {
     private Random randomGenerator = new Random();
 
     @Override
-    public Vote castVote() {
+    public Vote nextVote() {
         Voter voter = voterService.nextVoter();
         Candidate candidate = candidates.get(randomGenerator.nextInt(candidates.size()));
         return Vote.builder().voter(voter).candidate(candidate).build();

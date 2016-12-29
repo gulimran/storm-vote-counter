@@ -33,9 +33,12 @@ public class VoteSpout extends BaseRichSpout {
     public void nextTuple() {
         Utils.sleep(100);
 
-        Vote vote = serviceProvider.getBean(VoteService.class).castVote();
-        log.debug("Emitting vote: {}", vote);
-        collector.emit(new Values(vote));
+        Vote vote = serviceProvider.getBean(VoteService.class).nextVote();
+        log.debug("Vote: {}", vote);
+
+        if (vote != null) {
+            collector.emit(new Values(vote));
+        }
     }
 
     @Override

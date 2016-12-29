@@ -4,5 +4,5 @@ import imran.domain.Vote;
 
 public interface VoteService {
 
-    Vote castVote();
+    Vote nextVote();
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="0">
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %msg%n"/>
+        </Console>
+        <Async name="asyncAppender">
+            <AppenderRef ref="console"/>
+        </Async>
+    </Appenders>
+    <Loggers>
+        <Logger name="imran" level="info" additivity="false">
+            <AppenderRef ref="asyncAppender"/>
+        </Logger>
+        <Root level="error">
+            <AppenderRef ref="asyncAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>
