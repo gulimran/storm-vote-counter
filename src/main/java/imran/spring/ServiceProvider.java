@@ -1,6 +1,5 @@
-package imran.service;
+package imran.spring;
 
-import imran.spring.SpringContext;
 import java.io.Serializable;
 
 public class ServiceProvider implements Serializable {

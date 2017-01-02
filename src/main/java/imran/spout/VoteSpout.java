@@ -2,7 +2,8 @@ package imran.spout;
 
 import imran.api.VoteService;
 import imran.domain.Vote;
-import imran.service.ServiceProvider;
+import imran.spring.ServiceProvider;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.storm.spout.SpoutOutputCollector;
 import org.apache.storm.task.TopologyContext;
@@ -14,15 +15,13 @@ import org.apache.storm.utils.Utils;
 
 import java.util.Map;
 
+@Setter
 @Slf4j
 public class VoteSpout extends BaseRichSpout {
 
-    private final ServiceProvider serviceProvider;
+    private ServiceProvider serviceProvider;
     private SpoutOutputCollector collector;
-
-    public VoteSpout(ServiceProvider serviceProvider) {
-        this.serviceProvider = serviceProvider;
-    }
+    private String outputField;
 
     @Override
     public void open(Map map, TopologyContext topologyContext, SpoutOutputCollector spoutOutputCollector) {
@@ -43,6 +42,6 @@ public class VoteSpout extends BaseRichSpout {
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer declarer) {
-        declarer.declare(new Fields("vote"));
+        declarer.declare(new Fields(outputField));
     }
 }

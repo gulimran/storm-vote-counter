@@ -4,7 +4,7 @@ import imran.bolt.CounterBolt;
 import imran.bolt.ResultBolt;
 import imran.domain.Result;
 import imran.service.ResultService;
-import imran.service.ServiceProvider;
+import imran.spring.ServiceProvider;
 import imran.spout.VoteSpout;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,5 @@
 package imran.spring;
 
-import imran.Main;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -20,11 +19,6 @@ import java.io.IOException;
 @Import({StormConfig.class})
 @Slf4j
 public class SpringConfig {
-
-    @Bean
-    public Main main() {
-        return new Main();
-    }
 
     @Bean
     public static StandardEnvironment standardEnvironment() {
