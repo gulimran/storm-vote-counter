@@ -1,4 +1,4 @@
-package imran.test;
+package imran.service;
 
 import imran.api.VoteService;
 import imran.api.VoterService;
@@ -8,19 +8,24 @@ import imran.domain.Voter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
 
 @Service
-public class RandomVoteService implements VoteService {
+public class InMemoryVoteService implements VoteService {
 
     private List<Candidate> candidates = new InMemoryCandidateService().allCandidates();
     private VoterService voterService = new InMemoryVoterService();
-    private Random randomGenerator = new Random();
+
+    private Integer count = 0;
 
     @Override
     public Vote nextVote() {
         Voter voter = voterService.nextVoter();
-        Candidate candidate = candidates.get(randomGenerator.nextInt(candidates.size()));
+
+        if (count >= candidates.size()) {
+            count = 0;
+        }
+
+        Candidate candidate = candidates.get(count++);
         return Vote.builder().voter(voter).candidate(candidate).build();
     }
 }

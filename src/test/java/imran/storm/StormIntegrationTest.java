@@ -50,7 +50,7 @@ public abstract class StormIntegrationTest extends SpringIntegrationTest {
             throws Exception {
         log.info("Topology {} being Created and submitted", getTopologyName());
 
-        String id = getTopologyName() + "1";
+        String id = getTopologyName();
         stormTracker.startTracking(id);
         Resource resource = new ClassPathResource(getTopologyFilename());
         TopologyDef topologyDef = FluxParser.parseFile(resource.getFile().getAbsolutePath(), false, false, null, false);
