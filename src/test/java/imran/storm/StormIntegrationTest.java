@@ -14,7 +14,9 @@ import org.apache.storm.generated.KillOptions;
 import org.apache.storm.generated.StormTopology;
 import org.apache.storm.generated.TopologySummary;
 import org.apache.storm.testing.CompleteTopologyParam;
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -30,6 +32,7 @@ import static org.junit.Assert.assertThat;
 public abstract class StormIntegrationTest extends SpringIntegrationTest {
 
     private static LocalCluster cluster;
+    private long startTime;
     private static StormTracker stormTracker = StormTracker.getInstance();
 
     @BeforeClass
@@ -42,9 +45,18 @@ public abstract class StormIntegrationTest extends SpringIntegrationTest {
         cluster.shutdown();
     }
 
-    protected abstract String getTopologyName();
+    @Before
+    public void trackExecutionTime() throws Exception  {
+        startTime = System.currentTimeMillis();
+    }
 
-    protected abstract String getTopologyFilename();
+    @After
+    public void logExecutionTime(){
+        killTopology();
+        log.info("Total test Time " + (System.currentTimeMillis() - startTime) / 1000 + " seconds");
+    }
+
+    protected abstract String getTopologyName();
 
     protected StormTopology startTopology(String overrideComponentId, Class overrideClass, long timeout)
             throws Exception {
@@ -52,7 +64,7 @@ public abstract class StormIntegrationTest extends SpringIntegrationTest {
 
         String id = getTopologyName();
         stormTracker.startTracking(id);
-        Resource resource = new ClassPathResource(getTopologyFilename());
+        Resource resource = new ClassPathResource(getTopologyName() + ".yaml");
         TopologyDef topologyDef = FluxParser.parseFile(resource.getFile().getAbsolutePath(), false, false, null, false);
 
         Config config = FluxBuilder.buildConfig(topologyDef);
