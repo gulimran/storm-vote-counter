@@ -18,7 +18,7 @@ public abstract class SpringIntegrationTest {
     protected ApplicationContext context;
 
     @Before
-    public void setup() throws Exception {
+    public void initialize() throws Exception {
         setSpringContext();
     }
 

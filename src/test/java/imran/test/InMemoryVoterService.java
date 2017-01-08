@@ -1,4 +1,4 @@
-package imran.service;
+package imran.test;
 
 import imran.api.VoterService;
 import imran.domain.Voter;

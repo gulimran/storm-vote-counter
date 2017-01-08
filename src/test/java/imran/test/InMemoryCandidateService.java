@@ -1,4 +1,4 @@
-package imran.service;
+package imran.test;
 
 import imran.api.CandidateService;
 import imran.domain.Candidate;
